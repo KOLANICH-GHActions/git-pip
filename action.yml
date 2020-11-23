@@ -1,0 +1,20 @@
+name: git-pip
+description: |
+  Installs the pip packages of your choice. Needs python packaging be already bootstrapped.
+author: KOLANICH
+
+inputs:
+  packagesURIsFile:
+    description: 'A path to a file containing URIs of git repos of packages.'
+    required: false
+    default: './.ci/pythonPackagesToInstallFromGit.txt'
+
+runs:
+  using: "composite"
+  steps:
+    - run: bash ${{github.action_path}}/action.sh ${{inputs.packagesURIsFile}}
+      shell: bash  # fuck, this doesn't guarantee that the script is called with bash. Has to call bash explicitly
+
+branding:
+  icon: package
+  color: green
